@@ -9,17 +9,18 @@ provider "upcloud" {
 }
 
 module "k8s_cluster" {
-  source       = "../../upks"
+  source       = "manuelromeroaktios/kubernetes-cluster-module/upcloud"
+  version      = "v1.0.2"
   cluster_name = "example-cluster"
   zone         = "fi-hel1"
   network_id   = "123456"
   network_cidr = "10.0.0.0/24"
 
-  node_count        = 3
-  node_group_name   = "worker-nodes"
-  node_plan         = "2xCPU-4GB"
+  node_count          = 3
+  node_group_name     = "worker-nodes"
+  node_plan           = "2xCPU-4GB"
   private_node_groups = true
-  uks_version       = "1.32"
+  uks_version         = "1.32"
 
   ssh_keys = [
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy..."
