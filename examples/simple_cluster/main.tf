@@ -10,11 +10,10 @@ provider "upcloud" {
 
 module "k8s_cluster" {
   source       = "manuelromeroaktios/kubernetes-cluster-module/upcloud"
-  version      = "v1.0.2"
+  version      = "v1.0.4"
   cluster_name = "example-cluster"
   zone         = "fi-hel1"
   network_id   = "123456"
-  network_cidr = "10.0.0.0/24"
 
   node_count          = 3
   node_group_name     = "worker-nodes"

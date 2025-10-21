@@ -12,11 +12,6 @@ variable "zone" {
   type        = string
 }
 
-variable "network_cidr" {
-  description = "CIDR block for the cluster network."
-  type        = string
-}
-
 variable "network_id" {
   description = "ID of the network where the cluster will reside."
   type        = string

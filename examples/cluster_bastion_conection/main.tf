@@ -13,14 +13,26 @@ resource "upcloud_network" "example" {
   lifecycle {
     ignore_changes = [router]
   }
+  
 }
 
 module "kubernetes-cluster-module" {
-  source = "manuelromeroaktios/kubernetes-cluster-module/upcloud"
-  version = "v1.0.2"
+  source  = "manuelromeroaktios/kubernetes-cluster-module/upcloud"
+  version = "v1.0.4"
 
-  cluster_name       = "example-cluster-${var.customer}"
-  zone               = var.zone
+  # Restrict access to the cluster control plane to the internal IPs of the load balancer
+  cluster_name = "exampleapp-cluster-${var.customer}"
+  # Attach the cluster to the network resource (not the load balancer resource id)
+  network_id      = upcloud_network.example.id
+  zone            = var.zone
+  node_count      = 2
+  node_group_name = "exampleapp-nodegroup-${var.customer}"
+  plan            = "dev-md"
+
+  labels = {
+    managedBy = "terraform"
+  }
+
 }
 
 # Example server resource as Bastion host to access the Kubernetes cluster
@@ -45,5 +57,4 @@ resource "upcloud_server" "example" {
     network = upcloud_network.example.id
   }
 
-  depends_on = [upcloud_network.example]
 }
