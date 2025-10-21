@@ -2,8 +2,10 @@
 resource "upcloud_network" "example" {
   name = "example-network-${var.customer}"
   zone = var.zone
+
+  router = upcloud_router.example.id
   ip_network {
-    address = "172.16.1.0/24"
+    address = "172.16.2.0/24"
     dhcp    = true
     family  = "IPv4"
   }
@@ -13,7 +15,12 @@ resource "upcloud_network" "example" {
   lifecycle {
     ignore_changes = [router]
   }
-  
+
+  depends_on = [upcloud_router.example]
+}
+
+resource "upcloud_router" "example" {
+  name = "example-router-${var.customer}"
 }
 
 module "kubernetes-cluster-module" {
@@ -33,6 +40,7 @@ module "kubernetes-cluster-module" {
     managedBy = "terraform"
   }
 
+  depends_on = [upcloud_network.example]
 }
 
 # Example server resource as Bastion host to access the Kubernetes cluster
@@ -57,4 +65,5 @@ resource "upcloud_server" "example" {
     network = upcloud_network.example.id
   }
 
+  depends_on = [upcloud_network.example]
 }

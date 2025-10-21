@@ -6,16 +6,15 @@ variable "upcloud_username" {
 variable "upcloud_password" {
   description = "The password for the UpCloud account."
   type        = string
+  sensitive = true
 }
 
 variable "customer" {
   description = "The name of the customer."
   type        = string
-  default     = "scloud-75"
 }
 
 variable "zone" {
   description = "The UpCloud zone to deploy resources in."
   type        = string
-  default     = "es-mad1"
 }
