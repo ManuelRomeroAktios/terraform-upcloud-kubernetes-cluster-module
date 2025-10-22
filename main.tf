@@ -33,6 +33,9 @@ resource "upcloud_kubernetes_cluster" "main" {
 
   # Kubernetes version to deploy.
   version = var.uks_version
+
+  # Ensure external dependencies (like network/router) are created before the cluster.
+  depends_on = var.network_depends_on
 }
 
 # -------------------------------
