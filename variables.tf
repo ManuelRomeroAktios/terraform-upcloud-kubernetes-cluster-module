@@ -122,12 +122,3 @@ variable "uks_version" {
   type        = string
   default     = "1.32"
 }
-
-# -------------------------------
-# External Dependencies
-# -------------------------------
-variable "network_depends_on" {
-  description = "Optional list of external dependencies (e.g., network/router) to ensure they exist before creating the cluster."
-  type        = list(any)
-  default     = []
-}
